@@ -4,6 +4,7 @@
     {
         public int Id { get; set; }
         public string? Name { get; set; }
+        public ICollection<Order>? Orders { get; set; }
 
         public Client() { }
         public Client(int id, string name)

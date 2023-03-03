@@ -10,7 +10,7 @@ builder.Services.AddDbContext<AppDbContext>();
 
 builder.Services.AddScoped<IDao<Client>, DbDao<Client>>();
 builder.Services.AddScoped<IDao<Product>, DbDao<Product>>();
-builder.Services.AddScoped<IDao<Embroidery>, DbDao<Embroidery>>();
+builder.Services.AddScoped<IDao<OrderProduct>, DbDao<OrderProduct>>();
 builder.Services.AddScoped<IDao<Order>, DbDao<Order>>();
 
 var app = builder.Build();
@@ -45,17 +45,17 @@ app.MapPost("/product/add", async (HttpContext context, Product product, IDao<Pr
 app.MapPost("/product/delete", async (HttpContext context, int id, IDao<Product> dao)
     => await dao.DeleteAsync(id));
 
-//                                         -== Embroidery ==-
+//                                         -== OrderProduct ==-
 
-app.MapGet("/embroidery/all", async (HttpContext context, IDao<Embroidery> dao)
+app.MapGet("/embroidery/all", async (HttpContext context, IDao<OrderProduct> dao)
     => await dao.GetAllAsync());
-app.MapGet("/embroidery/get", async (HttpContext context, int id, IDao<Embroidery> dao)
+app.MapGet("/embroidery/get", async (HttpContext context, int id, IDao<OrderProduct> dao)
     => await dao.GetByIdAsync(id));
-app.MapPost("/embroidery/update", async (HttpContext context, Embroidery embroidery, IDao<Embroidery> dao)
+app.MapPost("/embroidery/update", async (HttpContext context, OrderProduct embroidery, IDao<OrderProduct> dao)
     => await dao.UpdateAsync(embroidery));
-app.MapPost("/embroidery/add", async (HttpContext context, Embroidery embroidery, IDao<Embroidery> dao)
+app.MapPost("/embroidery/add", async (HttpContext context, OrderProduct embroidery, IDao<OrderProduct> dao)
     => await dao.AddAsync(embroidery));
-app.MapPost("/embroidery/delete", async (HttpContext context, int id, IDao<Embroidery> dao)
+app.MapPost("/embroidery/delete", async (HttpContext context, int id, IDao<OrderProduct> dao)
     => await dao.DeleteAsync(id));
 
 //                                         -== ORDER ==-

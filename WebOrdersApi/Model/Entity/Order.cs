@@ -5,6 +5,8 @@
         public int Id { get; set; }
         public string? Description { get; set; }
         public int ClientId { get; set; }
+        public Client? Clients { get; set; }
+        public ICollection<OrderProduct>? OrderProducts { get; set; }
 
         public Order(){}
         public Order(int id, string? description, int clientId)
