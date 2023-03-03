@@ -1,4 +1,4 @@
-using WebOrdersApi.Model;
+п»їusing WebOrdersApi.Model;
 using WebOrdersApi.Model.Entity;
 using WebOrdersApi.Service.ClientService;
 
@@ -6,7 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>();
 
-// добавление зависимостей
+// РґРѕР±Р°РІР»РµРЅРёРµ Р·Р°РІРёСЃРёРјРѕСЃС‚РµР№
 
 builder.Services.AddScoped<IDao<Client>, DbDao<Client>>();
 builder.Services.AddScoped<IDao<Product>, DbDao<Product>>();
@@ -17,7 +17,7 @@ var app = builder.Build();
 
 app.MapGet("/", () => "Hello World!");
 
-// тестирование операций с таблицей клиента
+// С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ РѕРїРµСЂР°С†РёР№ СЃ С‚Р°Р±Р»РёС†РµР№ РєР»РёРµРЅС‚Р°
 
 //                                         -== CLIENT ==-
 
