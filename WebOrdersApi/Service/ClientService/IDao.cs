@@ -5,10 +5,10 @@ namespace WebOrdersApi.Service.ClientService
     //DAO
     public interface IDao<TEntity> where TEntity : class,IEntity
     {
-        Task<IReadOnlyList<TEntity>> GetAll();
-        Task<TEntity> GetById(int id);
-        Task<TEntity> Add(TEntity entity);
-        Task Update(TEntity entity);
-        Task<bool> Delete(int id);
+        Task<IReadOnlyList<TEntity>> GetAllAsync();
+        Task<TEntity> GetByIdAsync(int id);
+        Task<TEntity> AddAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
+        Task<bool> DeleteAsync(int id);
     }
 }

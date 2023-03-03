@@ -22,53 +22,53 @@ app.MapGet("/", () => "Hello World!");
 //                                         -== CLIENT ==-
 
 app.MapGet("/client/all", async (HttpContext context, IDao<Client> dao)
-    => await dao.GetAll());
+    => await dao.GetAllAsync());
 app.MapGet("/client/get", async (HttpContext context, int id, IDao<Client> dao)
-    => await dao.GetById(id));
+    => await dao.GetByIdAsync(id));
 app.MapPost("/client/update", async (HttpContext context, Client client, IDao<Client> dao)
-    => await dao.Update(client));
+    => await dao.UpdateAsync(client));
 app.MapPost("/client/add", async (HttpContext context, Client client, IDao<Client> dao)
-    => await dao.Add(client));
+    => await dao.AddAsync(client));
 app.MapPost("/client/delete", async (HttpContext context, int id, IDao<Client> dao)
-    => await dao.Delete(id));
+    => await dao.DeleteAsync(id));
 
 //                                         -== PRODUCT ==-
 
 app.MapGet("/product/all", async (HttpContext context, IDao<Product> dao)
-    => await dao.GetAll());
+    => await dao.GetAllAsync());
 app.MapGet("/product/get", async (HttpContext context, int id, IDao<Product> dao)
-    => await dao.GetById(id));
+    => await dao.GetByIdAsync(id));
 app.MapPost("/product/update", async (HttpContext context, Product product, IDao<Product> dao)
-    => await dao.Update(product));
+    => await dao.UpdateAsync(product));
 app.MapPost("/product/add", async (HttpContext context, Product product, IDao<Product> dao)
-    => await dao.Add(product));
+    => await dao.AddAsync(product));
 app.MapPost("/product/delete", async (HttpContext context, int id, IDao<Product> dao)
-    => await dao.Delete(id));
+    => await dao.DeleteAsync(id));
 
 //                                         -== Embroidery ==-
 
 app.MapGet("/embroidery/all", async (HttpContext context, IDao<Embroidery> dao)
-    => await dao.GetAll());
+    => await dao.GetAllAsync());
 app.MapGet("/embroidery/get", async (HttpContext context, int id, IDao<Embroidery> dao)
-    => await dao.GetById(id));
+    => await dao.GetByIdAsync(id));
 app.MapPost("/embroidery/update", async (HttpContext context, Embroidery embroidery, IDao<Embroidery> dao)
-    => await dao.Update(embroidery));
+    => await dao.UpdateAsync(embroidery));
 app.MapPost("/embroidery/add", async (HttpContext context, Embroidery embroidery, IDao<Embroidery> dao)
-    => await dao.Add(embroidery));
+    => await dao.AddAsync(embroidery));
 app.MapPost("/embroidery/delete", async (HttpContext context, int id, IDao<Embroidery> dao)
-    => await dao.Delete(id));
+    => await dao.DeleteAsync(id));
 
 //                                         -== ORDER ==-
 
 app.MapGet("/order/all", async (HttpContext context, IDao<Order> dao)
-    => await dao.GetAll());
+    => await dao.GetAllAsync());
 app.MapGet("/order/get", async (HttpContext context, int id, IDao<Order> dao)
-    => await dao.GetById(id));
+    => await dao.GetByIdAsync(id));
 app.MapPost("/order/update", async (HttpContext context, Order order, IDao<Order> dao)
-    => await dao.Update(order));
+    => await dao.UpdateAsync(order));
 app.MapPost("/order/add", async (HttpContext context, Order order, IDao<Order> dao)
-    => await dao.Add(order));
+    => await dao.AddAsync(order));
 app.MapPost("/order/delete", async (HttpContext context, int id, IDao<Order> dao)
-    => await dao.Delete(id));
+    => await dao.DeleteAsync(id));
 
 app.Run();

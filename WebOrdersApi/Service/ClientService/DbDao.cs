@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using WebOrdersApi.Model;
 using WebOrdersApi.Model.Entity;
 
@@ -16,13 +15,13 @@ namespace WebOrdersApi.Service.ClientService
             _context = context;
         }
 
-        public async Task<IReadOnlyList<TEntity>> GetAll()
+        public async Task<IReadOnlyList<TEntity>> GetAllAsync()
             => await Entities.ToListAsync();
-        public async Task<TEntity> GetById(int id) 
+        public async Task<TEntity> GetByIdAsync(int id) 
             => await Entities.SingleOrDefaultAsync(t => t.Id == id);
        
 
-        public async Task<TEntity> Add(TEntity entity)
+        public async Task<TEntity> AddAsync(TEntity entity)
         {
 
             await _context.AddAsync(entity);
@@ -31,13 +30,13 @@ namespace WebOrdersApi.Service.ClientService
             return entity;
         }
 
-        public async Task Update(TEntity entity)
+        public async Task UpdateAsync(TEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
             var product = await Entities
                 .FirstAsync(p => p.Id == id);
