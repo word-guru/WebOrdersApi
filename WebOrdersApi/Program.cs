@@ -1,4 +1,5 @@
-﻿using WebOrdersApi.Model;
+﻿using System.Text.Json.Serialization;
+using WebOrdersApi.Model;
 using WebOrdersApi.Model.Entity;
 using WebOrdersApi.Service.ClientService;
 
@@ -12,6 +13,12 @@ builder.Services.AddScoped<IDao<Client>, DbDao<Client>>();
 builder.Services.AddScoped<IDao<Product>, DbDao<Product>>();
 builder.Services.AddScoped<IDao<OrderProduct>, DbDao<OrderProduct>>();
 builder.Services.AddScoped<IDao<Order>, DbDao<Order>>();
+
+builder.Services.AddMvc().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.WriteIndented = true;
+});
 
 var app = builder.Build();
 
@@ -70,5 +77,7 @@ app.MapPost("/order/add", async (HttpContext context, Order order, IDao<Order> d
     => await dao.AddAsync(order));
 app.MapPost("/order/delete", async (HttpContext context, int id, IDao<Order> dao)
     => await dao.DeleteAsync(id));
+app.MapGet("/order/get_include", async (HttpContext context, IDao<Order> dao)
+    => await dao.GetWithIncludeAsync(u => u.Clients));
 
 app.Run();

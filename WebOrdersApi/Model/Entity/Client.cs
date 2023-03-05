@@ -1,6 +1,6 @@
 ﻿namespace WebOrdersApi.Model.Entity
 {
-    public class Client : IEntity
+    public class Client
     {
         public int Id { get; set; }
         public string? Name { get; set; }
