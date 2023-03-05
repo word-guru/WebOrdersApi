@@ -1,9 +1,12 @@
-﻿namespace WebOrdersApi.Model.Entity
+﻿using System.Text.Json.Serialization;
+
+namespace WebOrdersApi.Model.Entity
 {
     public class Client
     {
         public int Id { get; set; }
         public string? Name { get; set; }
+        [JsonIgnore]
         public ICollection<Order>? Orders { get; set; }
 
         public Client() { }

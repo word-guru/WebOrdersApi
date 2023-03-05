@@ -80,4 +80,5 @@ app.MapPost("/order/delete", async (HttpContext context, int id, IDao<Order> dao
 app.MapGet("/order/get_include", async (HttpContext context, IDao<Order> dao)
     => await dao.GetWithIncludeAsync(u => u.Clients));
 
+
 app.Run();
