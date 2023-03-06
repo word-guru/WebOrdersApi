@@ -24,6 +24,12 @@ namespace WebOrdersApi.Service.ClientService
         public async Task<IEnumerable<TEntity>> GetWithIncludeAsync(Expression<Func<TEntity, object>> include)
            => await Entities.Include(include).ToListAsync();
 
+        public async Task<IEnumerable<TEntity>> GetWithIncludeAsync(
+            Expression<Func<TEntity, object>> includeOne,
+            Expression<Func<TEntity, object>> includeTwo
+            )
+            => await Entities.Include(includeOne).Include(includeTwo).ToListAsync();
+
 
         private async Task<TEntity> FindByIdAsync(int id)
             => await Entities.FindAsync(id);

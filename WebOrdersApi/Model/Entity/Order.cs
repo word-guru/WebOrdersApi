@@ -8,6 +8,7 @@ namespace WebOrdersApi.Model.Entity
         public string? Description { get; set; }
         public int ClientId { get; set; }
         public Client? Clients { get; set; }
+        [JsonIgnore]
         public ICollection<OrderProduct>? OrderProducts { get; set; }
 
         public Order(){}
