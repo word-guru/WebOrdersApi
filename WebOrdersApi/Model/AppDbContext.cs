@@ -22,7 +22,8 @@ namespace WebOrdersApi.Model
                 .Build();
             // устанавливаем для контекста строку подключения
             // инициализируем саму строку подключения
-            optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
+            string useConnection = configuration.GetSection("DefaultConnection").Value;
+            optionsBuilder.UseNpgsql(configuration.GetConnectionString(useConnection));
         }
     }
 }

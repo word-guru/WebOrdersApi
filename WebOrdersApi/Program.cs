@@ -65,6 +65,7 @@ app.MapPost("/embroidery/add", async (HttpContext context, OrderProduct embroide
 app.MapPost("/embroidery/delete", async (HttpContext context, int id, IDao<OrderProduct> dao)
     => await dao.DeleteAsync(id));
 
+
 //                                         -== ORDER ==-
 
 app.MapGet("/order/all", async (HttpContext context, IDao<Order> dao)
