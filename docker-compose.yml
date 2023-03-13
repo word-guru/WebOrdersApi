@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  webordersapi:
+    image: ${DOCKER_REGISTRY-}webordersapi
+    ports:
+        - 5005:443
+        - 8008:80
+    build:
+      context: .
+      dockerfile: WebOrdersApi/Dockerfile
