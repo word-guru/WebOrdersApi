@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebOrdersApi.Model.Entity;
+using WebOrdersApi.Data.Entity;
 
 namespace WebOrdersApi.Data.DB
 {

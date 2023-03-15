@@ -1,5 +1,4 @@
 ﻿using WebOrdersApi.Data.Entity;
-using WebOrdersApi.Model;
 
 namespace WebOrdersApi.Service.IRepository
 {
