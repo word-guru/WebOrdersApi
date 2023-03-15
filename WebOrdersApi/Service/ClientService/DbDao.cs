@@ -1,24 +1,38 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using WebOrdersApi.Model;
 using WebOrdersApi.Model.Entity;
 
 namespace WebOrdersApi.Service.ClientService
 {
-    public class DbDao<TEntity> : IDao<TEntity> where TEntity : class,IEntity
+    public class DbDao<TEntity> : IDao<TEntity> where TEntity : class
     {
         private readonly AppDbContext _context;
-        private DbSet<TEntity> Entities => _context.Set<TEntity>();
+        private DbSet<TEntity> Entities;
         string _errorMessage = string.Empty;
 
         public DbDao(AppDbContext context)
         {
             _context = context;
+            Entities = context.Set<TEntity>();
         }
 
         public async Task<IReadOnlyList<TEntity>> GetAllAsync()
             => await Entities.ToListAsync();
-        public async Task<TEntity> GetByIdAsync(int id) 
-            => await Entities.SingleOrDefaultAsync(t => t.Id == id);
+        public async Task<TEntity> GetByIdAsync(int id)
+            => await FindByIdAsync(id);
+        public async Task<IEnumerable<TEntity>> GetWithIncludeAsync(Expression<Func<TEntity, object>> include)
+           => await Entities.Include(include).ToListAsync();
+
+        public async Task<IEnumerable<TEntity>> GetWithIncludeAsync(
+            Expression<Func<TEntity, object>> includeOne,
+            Expression<Func<TEntity, object>> includeTwo
+            )
+            => await Entities.Include(includeOne).Include(includeTwo).ToListAsync();
+
+
+        private async Task<TEntity> FindByIdAsync(int id)
+            => await Entities.FindAsync(id);
        
 
         public async Task<TEntity> AddAsync(TEntity entity)
@@ -38,9 +52,7 @@ namespace WebOrdersApi.Service.ClientService
 
         public async Task<bool> DeleteAsync(int id)
         {
-            var product = await Entities
-                .FirstAsync(p => p.Id == id);
-            _context.Remove(product);
+            _context.Remove(FindByIdAsync(id));
 
             await _context.SaveChangesAsync();
 
