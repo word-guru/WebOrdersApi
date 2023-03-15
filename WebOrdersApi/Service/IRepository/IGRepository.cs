@@ -1,10 +1,8 @@
 ﻿using System.Linq.Expressions;
-using WebOrdersApi.Model.Entity;
 
-namespace WebOrdersApi.Service.ClientService
+namespace WebOrdersApi.Service.IRepository
 {
-    //DAO
-    public interface IDao<TEntity> where TEntity : class
+    public interface IGRepository<TEntity> where TEntity : class
     {
         Task<IReadOnlyList<TEntity>> GetAllAsync();
         Task<TEntity> GetByIdAsync(int id);

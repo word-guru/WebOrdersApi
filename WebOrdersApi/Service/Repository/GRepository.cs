@@ -1,17 +1,17 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using WebOrdersApi.Model;
-using WebOrdersApi.Model.Entity;
+using WebOrdersApi.Service.IRepository;
 
-namespace WebOrdersApi.Service.ClientService
+namespace WebOrdersApi.Service.Repository
 {
-    public class DbDao<TEntity> : IDao<TEntity> where TEntity : class
+    public class GRepository<TEntity> : IGRepository<TEntity> where TEntity : class
     {
         private readonly AppDbContext _context;
         private DbSet<TEntity> Entities;
         string _errorMessage = string.Empty;
 
-        public DbDao(AppDbContext context)
+        public GRepository(AppDbContext context)
         {
             _context = context;
             Entities = context.Set<TEntity>();
@@ -33,7 +33,7 @@ namespace WebOrdersApi.Service.ClientService
 
         private async Task<TEntity> FindByIdAsync(int id)
             => await Entities.FindAsync(id);
-       
+
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
