@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WebOrdersApi.Model.Entity
+namespace WebOrdersApi.Data.Entity
 {
     public class Product
     {
@@ -10,7 +10,7 @@ namespace WebOrdersApi.Model.Entity
         [JsonIgnore]
         public ICollection<OrderProduct>? OrderProducts { get; set; }
 
-        public Product(){}
+        public Product() { }
         public Product(int id, string? name, int article)
         {
             Id = id;
@@ -18,8 +18,8 @@ namespace WebOrdersApi.Model.Entity
             Article = article;
         }
 
-        public override string ToString() 
+        public override string ToString()
             => $"{Id} - {Name} - {Article}";
-        
+
     }
 }

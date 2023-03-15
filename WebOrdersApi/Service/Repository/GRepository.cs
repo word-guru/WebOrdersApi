@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using WebOrdersApi.Model;
+using WebOrdersApi.Data.DB;
 using WebOrdersApi.Service.IRepository;
 
 namespace WebOrdersApi.Service.Repository

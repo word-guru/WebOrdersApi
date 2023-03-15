@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace WebOrdersApi.Model.Entity
+namespace WebOrdersApi.Data.Entity
 {
     public class Client
     {

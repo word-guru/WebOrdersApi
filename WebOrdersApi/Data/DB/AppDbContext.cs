@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebOrdersApi.Model.Entity;
 
-namespace WebOrdersApi.Model
+namespace WebOrdersApi.Data.DB
 {
     public class AppDbContext : DbContext
     {

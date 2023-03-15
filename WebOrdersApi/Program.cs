@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using WebOrdersApi.Model;
-using WebOrdersApi.Model.Entity;
+using WebOrdersApi.Data.DB;
+using WebOrdersApi.Data.Entity;
 using WebOrdersApi.Service.IRepository;
 using WebOrdersApi.Service.Repository;
 

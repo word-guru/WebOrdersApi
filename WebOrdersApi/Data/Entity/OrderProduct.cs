@@ -1,4 +1,4 @@
-﻿namespace WebOrdersApi.Model.Entity
+﻿namespace WebOrdersApi.Data.Entity
 {
     public class OrderProduct
     {
@@ -18,7 +18,7 @@
             ProductId = productId;
         }
 
-        public override string ToString() 
+        public override string ToString()
             => $"{Id} - {Quantity} - {OrdersId} - {ProductId}";
     }
 }
