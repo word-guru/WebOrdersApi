@@ -46,6 +46,8 @@ app.MapGet("/", () => "Hello World!");
 
 // тестирование операций с таблицей клиента
 
+//                                         -== CHEQUE And INFO ==-
+
 //тестирование запроса на получение информации о товаре
 app.MapGet("order/info", async (HttpContext context, IOrderReceipt dao, int id) =>
 {
