@@ -6,6 +6,9 @@ namespace WebOrdersApi.Data.Entity
     {
         public int Id { get; set; }
         public string? Name { get; set; }
+        public string Login { get; set; }
+        public string Password { get; set; }
+        public string Role { get; set; }
         [JsonIgnore]
         public ICollection<Order>? Orders { get; set; }
 

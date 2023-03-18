@@ -13,26 +13,6 @@ namespace WebOrdersApi.Controllers
     [ApiController]
     public class ChequeController : ControllerBase
     {
-       /* private readonly IOrderReceipt _cheque;
-
-        public ChequeController(IOrderReceipt cheque)
-        {
-            _cheque = cheque;
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetCheque(int id)
-        {
-           var res = await _cheque.GetOrderCheque(id);
-            return Ok(res);
-        }*/
-
-       /* [HttpGet]
-        public async Task<IActionResult> GetInfo(int id)
-        {
-            var res = await _cheque.GetOrderInfo(id);
-            return Ok(res);
-        }*/
        
     }
 }
