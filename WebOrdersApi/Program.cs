@@ -8,8 +8,6 @@ using WebOrdersApi.Service.IRepository;
 using WebOrdersApi.Service.Repository;
 using WebOrdersApi.JwtConfig;
 using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using WebOrdersApi.Service.LoginService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,23 +36,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
         };
     });
-
-/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                // укзывает, будет ли валидироваться издатель при валидации токена
-                ValidateIssuer = true,
-                // будет ли валидироваться потребитель токена
-                ValidateAudience = true,
-                // будет ли валидироваться время существования
-                ValidateLifetime = true,
-                ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                ValidAudience = builder.Configuration["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-            };
-        });*/
 
 builder.Services.AddDbContext<AppDbContext>();
 
