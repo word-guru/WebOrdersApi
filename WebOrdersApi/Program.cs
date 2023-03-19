@@ -1,12 +1,60 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
 using WebOrdersApi.Data.DB;
 using WebOrdersApi.Data.Entity;
 using WebOrdersApi.Service.Interface;
 using WebOrdersApi.Service.IRepository;
 using WebOrdersApi.Service.Repository;
+using WebOrdersApi.JwtConfig;
+using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using WebOrdersApi.Service.LoginService;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//                                  -== TOKEN ==-
+
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            // указывает, будет ли валидироваться издатель при валидации токена
+            ValidateIssuer = true,
+            // строка, представляющая издателя
+            ValidIssuer = AuthOptions.ISSUER,
+            // будет ли валидироваться потребитель токена
+            ValidateAudience = true,
+            // установка потребителя токена
+            ValidAudience = AuthOptions.AUDIENCE,
+            // будет ли валидироваться время существования
+            ValidateLifetime = true,
+            // установка ключа безопасности
+            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+            // валидация ключа безопасности
+            ValidateIssuerSigningKey = true,
+        };
+    });
+
+/*builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+        .AddJwtBearer(options =>
+        {
+            options.TokenValidationParameters = new TokenValidationParameters
+            {
+                // укзывает, будет ли валидироваться издатель при валидации токена
+                ValidateIssuer = true,
+                // будет ли валидироваться потребитель токена
+                ValidateAudience = true,
+                // будет ли валидироваться время существования
+                ValidateLifetime = true,
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            };
+        });*/
 
 builder.Services.AddDbContext<AppDbContext>();
 
@@ -14,9 +62,15 @@ builder.Services.AddDbContext<AppDbContext>();
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IOrderReceipt, OrderReceipt>();
+builder.Services.AddScoped<ILoginJWT, LoginJWT>();
+
+builder.Services.AddControllers();
+
+//                                   -== SWAGGER ==-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 
 builder.Services.AddMvc().AddJsonOptions(options =>
 {
@@ -24,10 +78,11 @@ builder.Services.AddMvc().AddJsonOptions(options =>
     options.JsonSerializerOptions.WriteIndented = true;
 });
 
-
-builder.Services.AddControllers();
-
 var app = builder.Build();
+
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 if (app.Environment.IsDevelopment())
 {
@@ -44,7 +99,17 @@ app.UseSwaggerUI(options =>
 app.MapGet("/", () => "Hello World!");
 
 
-// тестирование операций с таблицей клиента
+// тестирование операций
+
+//                                         -== TOKEN ==-
+
+app.MapPost("/login", (ILoginJWT jwt, string login, string password) =>
+{
+    return jwt.GetToken(login, password);
+
+});
+
+app.MapGet("/data", [Authorize] () => new { message = "Hello World!" });
 
 //                                         -== CHEQUE And INFO ==-
 
