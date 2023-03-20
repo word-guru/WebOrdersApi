@@ -90,17 +90,15 @@ app.MapPost("/login", (ILoginJWT jwt, string login, string password) =>
 
 });
 
-app.MapGet("/data",[Authorize] (HttpContext context) => new { message = "Hello World!" });
-
 //                                         -== CHEQUE And INFO ==-
 
 //тестирование запроса на получение информации о товаре
-app.MapGet("order/info", async (HttpContext context, IOrderReceipt dao, int id) =>
+app.MapGet("order/info", [Authorize] async (HttpContext context, IOrderReceipt dao, int id) =>
 {
     return await dao.GetOrderInfo(id);
 });
 //тестирование запроса на получение чека с заказом
-app.MapGet("/order/check", (HttpContext context, IOrderReceipt dao, int id) =>
+app.MapGet("/order/check", [Authorize] (HttpContext context, IOrderReceipt dao, int id) =>
 {
     return dao.GetOrderCheque(id).ToString();
 });
@@ -109,23 +107,23 @@ app.MapGet("/order/check", (HttpContext context, IOrderReceipt dao, int id) =>
 
 app.MapGet("/client/all",[Authorize] async (HttpContext context, IUnitOfWork dao)
     => await dao.Clients.GetAllAsync());
-app.MapPost("/client/update", async (HttpContext context, Client client, IUnitOfWork dao)
+app.MapPost("/client/update", [Authorize] async (HttpContext context, Client client, IUnitOfWork dao)
     => await dao.Clients.UpdateAsync(client));
-app.MapPost("/client/add", async (HttpContext context, Client client, IUnitOfWork dao)
+app.MapPost("/client/add", [Authorize] async (HttpContext context, Client client, IUnitOfWork dao)
     => await dao.Clients.AddAsync(client));
-app.MapPost("/client/delete", async (HttpContext context, int id, IUnitOfWork dao)
+app.MapPost("/client/delete", [Authorize] async (HttpContext context, int id, IUnitOfWork dao)
     => await dao.Clients.DeleteAsync(id));
 
 //                                         -== PRODUCT ==-
 
-app.MapGet("/product/all", async (HttpContext context, IUnitOfWork dao)
+app.MapGet("/product/all", [Authorize] async (HttpContext context, IUnitOfWork dao)
     => await dao.Products.GetAllAsync());
 
-app.MapPost("/product/update", async (HttpContext context, Product product, IUnitOfWork dao)
+app.MapPost("/product/update", [Authorize] async (HttpContext context, Product product, IUnitOfWork dao)
     => await dao.Products.UpdateAsync(product));
-app.MapPost("/product/add", async (HttpContext context, Product product, IUnitOfWork dao)
+app.MapPost("/product/add", [Authorize] async (HttpContext context, Product product, IUnitOfWork dao)
     => await dao.Products.AddAsync(product));
-app.MapPost("/product/delete", async (HttpContext context, int id, IUnitOfWork dao)
+app.MapPost("/product/delete", [Authorize] async (HttpContext context, int id, IUnitOfWork dao)
     => await dao.Products.DeleteAsync(id));
 
 //                                         -== OrderProduct ==-
