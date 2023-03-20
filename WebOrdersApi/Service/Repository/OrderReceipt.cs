@@ -43,8 +43,8 @@ namespace WebOrdersApi.Service.Repository
 
         public async Task<IResult> GetOrderInfo(int id)
         {
-            var order = await _db.Orders.FirstOrDefaultAsync(p => p.Id == id);
-            //var order = await _unit.Orders.GetByIdAsync(p => p.Id == id);
+            //var order = await _db.Orders.FirstOrDefaultAsync(p => p.Id == id);
+            var order = await _unit.Orders.GetByIdAsync(p => p.Id == id);
 
             if (order is null)
             {
@@ -56,7 +56,7 @@ namespace WebOrdersApi.Service.Repository
                 .Where(op => op.OrderId == id)
                 .Include(p => p.Product);
 
-            var orProd = _unit.OrderProducts.GetByIdAsync(op => op.OrderId == id, new List<string> { "Products" });
+            //var orderProducts = await _unit.OrderProducts.GetByIdAsync(op => op.OrderId == id, new List<string> { "Products" });
 
             var response = new 
             { 
