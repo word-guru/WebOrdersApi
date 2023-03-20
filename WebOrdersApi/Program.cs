@@ -90,7 +90,7 @@ app.MapPost("/login", (ILoginJWT jwt, string login, string password) =>
 
 });
 
-app.MapGet("/data", [Authorize] () => new { message = "Hello World!" });
+app.MapGet("/data",[Authorize] (HttpContext context) => new { message = "Hello World!" });
 
 //                                         -== CHEQUE And INFO ==-
 
@@ -107,7 +107,7 @@ app.MapGet("/order/check", (HttpContext context, IOrderReceipt dao, int id) =>
 
 //                                         -== CLIENT ==-
 
-app.MapGet("/client/all", async (HttpContext context, IUnitOfWork dao)
+app.MapGet("/client/all",[Authorize] async (HttpContext context, IUnitOfWork dao)
     => await dao.Clients.GetAllAsync());
 app.MapPost("/client/update", async (HttpContext context, Client client, IUnitOfWork dao)
     => await dao.Clients.UpdateAsync(client));
