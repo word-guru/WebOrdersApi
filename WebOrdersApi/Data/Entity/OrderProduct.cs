@@ -1,10 +1,10 @@
-﻿namespace WebOrdersApi.Model.Entity
+﻿namespace WebOrdersApi.Data.Entity
 {
     public class OrderProduct
     {
         public int Id { get; set; }
         public int Quantity { get; set; }
-        public int OrdersId { get; set; }
+        public int OrderId { get; set; }
         public Order? Order { get; set; }
         public int ProductId { get; set; }
         public Product? Product { get; set; }
@@ -14,11 +14,11 @@
         {
             Id = id;
             Quantity = quantity;
-            OrdersId = ordersId;
+            OrderId = ordersId;
             ProductId = productId;
         }
 
-        public override string ToString() 
-            => $"{Id} - {Quantity} - {OrdersId} - {ProductId}";
+        public override string ToString()
+            => $"{Id} - {Quantity} - {OrderId} - {ProductId}";
     }
 }

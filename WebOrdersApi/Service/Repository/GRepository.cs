@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using WebOrdersApi.Model;
+using WebOrdersApi.Data.DB;
 using WebOrdersApi.Service.IRepository;
 
 namespace WebOrdersApi.Service.Repository
@@ -9,7 +9,6 @@ namespace WebOrdersApi.Service.Repository
     {
         private readonly AppDbContext _context;
         private DbSet<TEntity> Entities;
-        string _errorMessage = string.Empty;
 
         public GRepository(AppDbContext context)
         {
@@ -18,22 +17,22 @@ namespace WebOrdersApi.Service.Repository
         }
 
         public async Task<IReadOnlyList<TEntity>> GetAllAsync()
-            => await Entities.ToListAsync();
-        public async Task<TEntity> GetByIdAsync(int id)
-            => await FindByIdAsync(id);
-        public async Task<IEnumerable<TEntity>> GetWithIncludeAsync(Expression<Func<TEntity, object>> include)
-           => await Entities.Include(include).ToListAsync();
-
-        public async Task<IEnumerable<TEntity>> GetWithIncludeAsync(
-            Expression<Func<TEntity, object>> includeOne,
-            Expression<Func<TEntity, object>> includeTwo
-            )
-            => await Entities.Include(includeOne).Include(includeTwo).ToListAsync();
-
-
-        private async Task<TEntity> FindByIdAsync(int id)
-            => await Entities.FindAsync(id);
-
+        {
+            IQueryable<TEntity> query = Entities;
+            return await query.AsNoTracking().ToListAsync();
+        }
+        public async Task<TEntity> GetByIdAsync(Expression<Func<TEntity, bool>> expression, List<string> includes = null)
+        {
+            IQueryable<TEntity> query = Entities;
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+            return await query.AsNoTracking().FirstOrDefaultAsync(expression);
+        }
 
         public async Task<TEntity> AddAsync(TEntity entity)
         {
@@ -50,13 +49,10 @@ namespace WebOrdersApi.Service.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            _context.Remove(FindByIdAsync(id));
-
-            await _context.SaveChangesAsync();
-
-            return true;
+            var entity = await Entities.FindAsync(id);
+            Entities.Remove(entity);
         }
     }
 }
