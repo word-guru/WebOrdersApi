@@ -61,7 +61,6 @@ builder.Services.AddMvc().AddJsonOptions(options =>
 
 var app = builder.Build();
 
-
 app.UseAuthentication();
 app.UseAuthorization();
 
